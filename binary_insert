@@ -1,0 +1,23 @@
+// 折半插入排序
+		public void binaryInsert(int[] a) {
+			int len = a.length;
+			for (int i = 1; i < len; i++) {
+				int temp = a[i];
+				int left = 0, right = i - 1;
+				while (left <= right) {
+					int mid = (left + right) / 2;
+					if (a[mid] > temp) {
+						right = mid - 1;
+					} else {
+						left = mid + 1;
+					}
+				}
+				int j = i - 1;
+				while (j >= left) {
+					a[j + 1] = a[j];
+					j--;
+				}
+				a[left] = temp;
+			}
+			System.out.println(Arrays.toString(a));
+		}
