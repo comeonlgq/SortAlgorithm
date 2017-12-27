@@ -1,0 +1,31 @@
+// 1.4 堆排序
+		/**
+		 * 大根堆的要求是每个节点的值都不大于其父节点的值
+		 */
+		public void heapsort(int[] a) {
+			createHeap(a, 0, a.length - 1);
+			System.out.println(Arrays.toString(a));
+		}
+
+		// 创建堆(大根堆)
+		private void createHeap(int[] a, int left, int right) {
+			if (left > right)// 注意这里不带等号，否则的话会少排序一次
+				return;
+			for (int i = (right + left) / 2 - 1; i >= 0; i--) {
+				if (2 * i + 1 == a.length - 1) {// 只有左子树
+					if (a[i] < a[2 * i + 1]) {
+						swap(a, i, 2 * i + 1);
+					}
+				} else {// 左右子树都有
+					if (a[2 * i + 1] >= a[2 * i + 2]) {
+						if (a[i] < a[2 * i + 1])
+							swap(a, i, 2 * i + 1);
+					} else {
+						if (a[i] < a[2 * i + 2])
+							swap(a, i, 2 * i + 2);
+					}
+				}
+			}
+			swap(a, left, right);// 将最大的元素放到最后面
+			createHeap(a, left, right - 1);
+		}
