@@ -1,0 +1,21 @@
+
+public void select_c(int[] a) {
+			int len = a.size();
+			int min = 0;
+			for (int i = 0; i < len; i++) {
+				min = i;
+				for (int j = i + 1; j < len; j++) {// 注意这里j=i+1，而不是j=0
+					if (a[min] > a[j])
+						min = j;
+				}
+				if (min != i)
+					swap(a, min, i);
+			}
+		
+		}
+
+		public void swap(int[] a, int i, int j) {
+			int temp = a[i];
+			a[i] = a[j];
+			a[j] = temp;
+		}
