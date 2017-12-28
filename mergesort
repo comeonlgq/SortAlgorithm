@@ -1,0 +1,40 @@
+// 归并排序
+		/**
+		 * 算法是采用分治法（Divide and Conquer）的一个非常典型的应用。将已有序的子序列合并，得到完全有序的序列；
+		 * 即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为二路归并 start表示合并的起点
+		 * step表示步长，即两个需要比较的字符之间的距离
+		 */
+		public void mergesort(int[] a, int start, int step) {
+			int size = a.length;// 表示数组的长度
+			int mid = size / (step << 1);// 表示需要比较的组数
+			int c = size & ((step << 1) - 1);//求余数的，即分组后剩下的元素个数
+			if (mid == 0)
+				return;// 当只剩下一个有序集合时算法结束
+			// 进行一趟归并排序
+			for (int i = 0; i < mid; i++) {
+				start = i * 2 * step;
+				merge(a, start, start + step, (step << 1) + start - 1);
+			}
+			// 将剩下的数和倒数一个有序集合归并
+			if (c != 0)
+				merge(a, size - c - 2 * step, size - c, size - 1);
+			// 递归执行下一趟归并排序
+			mergesort(a, 0, 2 * step);
+		}
+
+		private void merge(int[] a, int left, int mid, int right) {
+			int[] copy = new int[right - left + 1];
+			int i = left, j = mid, k = 0;
+			while (i < mid && j <= right) {
+				if (a[i] <= a[j])
+					copy[k++] = a[i++];
+				else
+					copy[k++] = a[j++];
+			}
+			while (i < mid)
+				copy[k++] = a[i++];
+			while (j <= right)
+				copy[k++] = a[j++];
+			// 将copy中的数组复制到a中
+			System.arraycopy(copy, 0, a, left, copy.length);
+		}
